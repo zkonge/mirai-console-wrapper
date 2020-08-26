@@ -1,0 +1,15 @@
+plugins {
+    id 'java'
+}
+
+group 'pw.konge.mirai.console.wrapper'
+version '0.1'
+description 'Another Mirai console wrapper'
+
+jar {
+    manifest {
+        attributes 'Main-Class': 'pw.konge.mirai.console.wrapper.Wrapper'
+    }
+
+    exclude 'META-INF/*.RSA', 'META-INF/*.SF', 'META-INF/*.DSA'
+}
