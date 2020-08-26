@@ -3,6 +3,7 @@ package pw.konge.mirai.console.wrapper;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.net.URL;
 import java.net.MalformedURLException;
 import java.net.URLClassLoader;
@@ -35,6 +36,7 @@ public class Wrapper {
         return null;
     }
 
+
     public static void main(String[] args) {
         // ExitCode:
         //  151 -> mirai-core jar broken
@@ -62,11 +64,21 @@ public class Wrapper {
             System.exit(151);
         }
 
+        Thread thread = new Thread(() -> {
+            try {
+                Thread.sleep(1000 * 60);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            System.gc();
+        });
+        thread.start();
+
         try {
-            loader
+            Method m = loader
                     .loadClass("net.mamoe.mirai.console.pure.MiraiConsolePureLoader")
-                    .getMethod("main", String[].class)
-                    .invoke(null, (Object) new String[]{});
+                    .getMethod("main", String[].class);
+            m.invoke(null, (Object) new String[]{});
         } catch (
                 ClassNotFoundException | NoSuchMethodException | IllegalAccessException | InvocationTargetException e
         ) {
