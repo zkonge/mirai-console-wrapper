@@ -3,7 +3,7 @@ plugins {
 }
 
 group 'pw.konge.mirai.console.wrapper'
-version '0.1'
+version '0.1.1'
 description 'Another Mirai console wrapper'
 
 jar {

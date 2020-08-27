@@ -8,6 +8,8 @@ import java.net.URL;
 import java.net.MalformedURLException;
 import java.net.URLClassLoader;
 import java.util.Objects;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.jar.JarFile;
 import java.util.regex.Pattern;
 
@@ -64,15 +66,12 @@ public class Wrapper {
             System.exit(151);
         }
 
-        Thread thread = new Thread(() -> {
-            try {
-                Thread.sleep(1000 * 60);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+        new Timer().schedule(new TimerTask() {
+            @Override
+            public void run() {
+                System.gc();
             }
-            System.gc();
-        });
-        thread.start();
+        }, 0, 60 * 1000);
 
         try {
             Method m = loader
